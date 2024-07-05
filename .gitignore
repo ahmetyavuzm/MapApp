@@ -1,2 +1,2 @@
-/MapApp/obj
-/MapApp/bin
+/MapApp/obj/*
+/MapApp/bin/*

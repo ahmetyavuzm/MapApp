@@ -1,4 +1,5 @@
 ﻿namespace MapApp.Models;
+using MapApp.Enums;
 
 public class Response<T>
 {

@@ -1,5 +1,6 @@
 ﻿namespace MapApp.Entities;
 using MapApp.Interfaces;
+using MapApp.DTOs;
 
 
 public class Point:IEntity
@@ -21,11 +22,11 @@ public class Point:IEntity
         
     }
 
-    public Point(int id, PointBodyView body)
+    public Point(int id, PointDTO dto)
     {
         Id = id;
-        Name = body.Name;
-        X = body.X;
-        Y = body.Y;
+        Name = dto.Name;
+        X = dto.X;
+        Y = dto.Y;
     }
 }

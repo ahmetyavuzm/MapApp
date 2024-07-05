@@ -1,4 +1,6 @@
 using MapApp;
+using MapApp.Interfaces;
+using MapApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IPointService, PointService>();
-builder.Services.AddSingleton<IDBService, MapAppDBService>();
+builder.Services.AddScoped<IPointService, PointService>();
+builder.Services.AddScoped<IDBService, MapAppDBService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-using MapApp;
+namespace MapApp.Interfaces;
 
 
 public interface IEntity

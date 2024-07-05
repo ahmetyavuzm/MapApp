@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MapApp;
+using MapApp.Models;
+using MapApp.Interfaces;
+using MapApp.Entities;
+using MapApp.DTOs;
+
+namespace MapApp.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -53,11 +58,11 @@ public class PointController:ControllerBase , IPointController
     }
 
     [HttpPost]
-    public async Task<Response<Point>> Add([FromBody] PointBodyView point_body)
+    public async Task<Response<Point>> Add([FromBody] PointDTO pointDto)
     {
         try
         {
-            Point res_point = await _pointService.Add(point_body);
+            Point res_point = await _pointService.Add(pointDto);
             if (res_point == null)
             {
                 return Response<Point>.Fail(null, "Point not added");
@@ -71,11 +76,11 @@ public class PointController:ControllerBase , IPointController
     }
 
     [HttpPost("{id}")]
-    public async Task<Response<Point>> Update(int id, [FromBody] PointBodyView point_body)
+    public async Task<Response<Point>> Update(int id, [FromBody] PointDTO pointDto)
     {
         try
         {
-            var res_point = await _pointService.Update(id, point_body);
+            var res_point = await _pointService.Update(id, pointDto);
             if (res_point == null)
             {
                 return Response<Point>.Fail(null, "Point not updated");

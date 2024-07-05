@@ -1,4 +1,6 @@
-﻿namespace MapApp;
+﻿namespace MapApp.Entities;
+using MapApp.Interfaces;
+
 
 public class Point:IEntity
 {

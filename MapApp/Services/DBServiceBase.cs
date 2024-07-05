@@ -1,5 +1,9 @@
 using System.Data.Common;
 using MapApp;
+using MapApp.Interfaces;
+
+
+namespace MapApp.Services;
 
 
 public abstract class DBServiceBase: IDBService
@@ -18,3 +22,4 @@ public abstract class DBServiceBase: IDBService
     }
     public abstract Task<R?> ExecuteDatabaseOperations<R>(Func<DbCommand, Task<R?>> expression) where R : class;
 }
+

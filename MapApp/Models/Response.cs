@@ -1,4 +1,4 @@
-﻿namespace MapApp;
+﻿namespace MapApp.Models;
 
 public class Response<T>
 {

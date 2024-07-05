@@ -1,8 +1,11 @@
 ﻿
 using System.Data;
 using System.Data.Common;
+using MapApp.Interfaces;
+using MapApp.Entities;
+using MapApp.DTOs;
 
-namespace MapApp;
+namespace MapApp.Services;
 
 public class PointService : IPointService
 {
@@ -15,7 +18,7 @@ public class PointService : IPointService
 
     }
 
-    public async Task<Point?> Add(PointBodyView view)
+    public async Task<Point?> Add(PointDTO view)
     {
         string query = $"INSERT INTO \"{this.table_name}\" (\"X\",\"Y\",\"Name\") VALUES ({view.X}, {view.Y}, '{view.Name}') RETURNING \"Id\"";
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
@@ -38,7 +41,7 @@ public class PointService : IPointService
         return response;
     }
 
-    public async Task<Point?> Update(int id,PointBodyView view)
+    public async Task<Point?> Update(int id,PointDTO view)
     {
         string query = $"UPDATE \"{this.table_name}\" SET \"X\" = {view.X}, \"Y\" = {view.Y}, \"Name\" = '{view.Name}' WHERE \"Id\" = {id} RETURNING \"Id\"";
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {

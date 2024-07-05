@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace MapApp;
+namespace MapApp.Interfaces;
 
 public interface IDBService
 {

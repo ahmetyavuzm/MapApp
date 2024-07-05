@@ -465,11 +465,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/MapApp/MapApp/MapApp.csproj",
+      "projectUniqueName": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/MapApp.csproj",
       "projectName": "MapApp",
-      "projectPath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/MapApp/MapApp/MapApp.csproj",
+      "projectPath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/MapApp.csproj",
       "packagesPath": "/Users/ayavuzm/.nuget/packages/",
-      "outputPath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/MapApp/MapApp/obj/",
+      "outputPath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ayavuzm/.nuget/NuGet/NuGet.Config"

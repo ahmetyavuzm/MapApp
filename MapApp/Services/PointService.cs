@@ -15,16 +15,6 @@ public class PointService : IPointService
         return item;
     }
 
-    public Point Delete(int id)
-    {
-        Point point = points.FirstOrDefault(p => p.Id == id);
-        if (point == null)
-        {
-            return null;
-        }
-        points.Remove(point);
-        return point;
-    }
 
     public Point Get(int id)
     {
@@ -47,6 +37,17 @@ public class PointService : IPointService
         item.X = point_body.X;
         item.Y = point_body.Y;
         return item;
+    }
+
+    public Point Delete(int id)
+    {
+        Point point = points.FirstOrDefault(p => p.Id == id);
+        if (point == null)
+        {
+            return null;
+        }
+        points.Remove(point);
+        return point;
     }
 
 

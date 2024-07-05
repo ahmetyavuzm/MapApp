@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IPointService, PointService>();
+builder.Services.AddScoped<IPointService, PointService>();
 
 var app = builder.Build();
 

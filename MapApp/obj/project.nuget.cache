@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hASWTJL9jwY=",
+  "dgSpecHash": "4Vr5ud6xQUg=",
   "success": true,
-  "projectFilePath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/MapApp/MapApp/MapApp.csproj",
+  "projectFilePath": "/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/MapApp.csproj",
   "expectedPackageFiles": [
     "/Users/ayavuzm/.nuget/packages/microsoft.aspnetcore.openapi/8.0.6/microsoft.aspnetcore.openapi.8.0.6.nupkg.sha512",
     "/Users/ayavuzm/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

@@ -6,7 +6,7 @@ namespace MapApp;
 [Route("api/[controller]")]
 public class PointController:ControllerBase , IPointController
 {
-    private static readonly List<Point> points = new List<Point>();
+
     private readonly IPointService _pointService;
 
     public PointController(IPointService pointService)
@@ -87,7 +87,7 @@ public class PointController:ControllerBase , IPointController
     {   
         try
         {
-            var res_point = _pointService.Get(id);
+            var res_point = _pointService.Delete(id);
             if (res_point == null)
             {
                 return Response<Point>.Fail(null, "Point not found");

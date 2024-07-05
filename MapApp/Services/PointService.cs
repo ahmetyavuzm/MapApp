@@ -10,14 +10,14 @@ public class PointService : IPointService
     private readonly IDBService _dBService;
     public PointService(IDBService dBService)
     {
-        this.table_name = "public.points";
+        this.table_name = "public.Points";
         this._dBService = dBService;
 
     }
 
     public async Task<Point?> Add(PointBodyView view)
     {
-        string query = $"INSERT INTO {this.table_name} (\"X\",\"Y\",\"NAME\") VALUES ({view.X}, {view.Y}, '{view.Name}') RETURNING \"ID\"";
+        string query = $"INSERT INTO {this.table_name} (\"X\",\"Y\",\"Name\") VALUES ({view.X}, {view.Y}, '{view.Name}') RETURNING \"Id\"";
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
             command.CommandText = query;
             var res =  await command.ExecuteScalarAsync();
@@ -40,7 +40,7 @@ public class PointService : IPointService
 
     public async Task<Point?> Update(int id,PointBodyView view)
     {
-        string query = $"UPDATE {this.table_name} SET \"X\" = {view.X}, \"Y\" = {view.Y}, \"NAME\" = '{view.Name}' WHERE \"ID\" = {id} RETURNING \"ID\"";
+        string query = $"UPDATE {this.table_name} SET \"X\" = {view.X}, \"Y\" = {view.Y}, \"Name\" = '{view.Name}' WHERE \"Id\" = {id} RETURNING \"Id\"";
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
             command.CommandText = query;
             var res =  await command.ExecuteScalarAsync();
@@ -61,7 +61,7 @@ public class PointService : IPointService
     public async Task<Point?> Delete(int id)
     {
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = $"DELETE FROM {this.table_name} WHERE \"ID\" = {id} RETURNING *";
+            command.CommandText = $"DELETE FROM {this.table_name} WHERE \"Id\" = {id} RETURNING *";
             using (var reader = await command.ExecuteReaderAsync()){
                 if (await reader.ReadAsync()){
                     return MapToEntity(reader);
@@ -102,7 +102,7 @@ public class PointService : IPointService
     public async Task<Point?> GetById(int id)
     {
         var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = $"SELECT * FROM {this.table_name} WHERE \"ID\" = {id}";
+            command.CommandText = $"SELECT * FROM {this.table_name} WHERE \"Id\" = {id}";
             using (var reader = await command.ExecuteReaderAsync()){
                 if (await reader.ReadAsync()){
                     return MapToEntity(reader);

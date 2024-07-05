@@ -1,4 +1,5 @@
 using MapApp;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IPointService, PointService>();
-builder.Services.AddSingleton<IDBService, MapAppDBService>();
+builder.Services.AddScoped<IDBService, MapAppDBService>();
+builder.Services.AddScoped<IPointService, PointService>();
+builder.Services.AddScoped<MapAppDbContext>(
+    provider => provider.GetService<DbContextOptions<MapAppDbContext>>() != null
+        ? new MapAppDbContext(provider.GetService<DbContextOptions<MapAppDbContext>>())
+        : new MapAppDbContext(new DbContextOptionsBuilder<MapAppDbContext>().UseNpgsql(builder.Configuration.GetConnectionString("MyPostgresConnection")).Options)
+);
+
 
 var app = builder.Build();
 

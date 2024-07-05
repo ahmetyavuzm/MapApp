@@ -1,134 +1,60 @@
 ﻿
 using System.Data;
 using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace MapApp;
 
 public class PointService : IPointService
 {
     private readonly string table_name;
-    private readonly IDBService _dBService;
-    public PointService(IDBService dBService)
-    {
-        this.table_name = "public.points";
-        this._dBService = dBService;
 
+    private readonly MapAppDbContext _context;
+    public PointService(MapAppDbContext context)
+    {
+        this.table_name = "public.Points";
+        this._context = context;
+    
     }
 
-    public async Task<Point?> Add(PointBodyView view)
+public async Task<Point?> Add(PointBodyView view)
     {
-        string query = $"INSERT INTO {this.table_name} (\"X\",\"Y\",\"NAME\") VALUES ({view.X}, {view.Y}, '{view.Name}') RETURNING \"ID\"";
-        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = query;
-            var res =  await command.ExecuteScalarAsync();
-            
-            if (res == null){
-                return null as Point;
-            }
-            
-            int id = Convert.ToInt32(res);
-
-            return new Point(id,view.Name,view.X,view.Y);
-        });
-
-
-        if (response == null){
-            return null;
-        }
-        return response;
+        var point = new Point(0, view.Name, view.X, view.Y);
+        _context.Points.Add(point);
+        await _context.SaveChangesAsync();
+        return point;
     }
 
-    public async Task<Point?> Update(int id,PointBodyView view)
+    public async Task<Point?> Update(int id, PointBodyView view)
     {
-        string query = $"UPDATE {this.table_name} SET \"X\" = {view.X}, \"Y\" = {view.Y}, \"NAME\" = '{view.Name}' WHERE \"ID\" = {id} RETURNING \"ID\"";
-        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = query;
-            var res =  await command.ExecuteScalarAsync();
-            if (res == null){
-                return null as Point;
-            }
-            int id = Convert.ToInt32(res);
+        var point = await _context.Points.FindAsync(id);
+        if (point == null) return null;
 
-            return new Point(id,view.Name,view.X,view.Y);
-        });
-
-        if (response == null){
-            return null;
-        }
-        return response;
+        point.Name = view.Name;
+        point.X = view.X;
+        point.Y = view.Y;
+        _context.Points.Update(point);
+        await _context.SaveChangesAsync();
+        return point;
     }
 
     public async Task<Point?> Delete(int id)
     {
-        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = $"DELETE FROM {this.table_name} WHERE \"ID\" = {id} RETURNING *";
-            using (var reader = await command.ExecuteReaderAsync()){
-                if (await reader.ReadAsync()){
-                    return MapToEntity(reader);
-                }else{
-                    return null;
-                }
-            }
-        });
+        var point = await _context.Points.FindAsync(id);
+        if (point == null) return null;
 
-        if (response == null){
-            return null;
-        }else{
-            return response;
-        }
+        _context.Points.Remove(point);
+        await _context.SaveChangesAsync();
+        return point;
     }
 
     public async Task<List<Point>?> GetAll()
     {
-        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = $"SELECT * FROM {this.table_name}";
-            using (var reader = await command.ExecuteReaderAsync()){
-                List<Point> entities = new List<Point>();
-                while (await reader.ReadAsync()){
-                    entities.Add(MapToEntity(reader));
-                }
-                return entities;
-            }
-
-        });
-
-        if (response == null){
-            return null;
-        }else{
-            return response;
-        }
+        return await _context.Points.ToListAsync();
     }
 
     public async Task<Point?> GetById(int id)
     {
-        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
-            command.CommandText = $"SELECT * FROM {this.table_name} WHERE \"ID\" = {id}";
-            using (var reader = await command.ExecuteReaderAsync()){
-                if (await reader.ReadAsync()){
-                    return MapToEntity(reader);
-                }else{
-                    return null;
-                }
-            }
-        });
-
-        if (response == null){
-            return null;
-        }else{
-            return response;
-        }
+        return await _context.Points.FindAsync(id);
     }
-
-    private Point MapToEntity(DbDataReader reader)
-    {
-        Point point = new Point(
-            reader.GetInt32(0),
-            reader.GetString(3),
-            reader.GetDouble(1),
-            reader.GetDouble(2)
-
-        );
-        return point;
-    }
-
 }

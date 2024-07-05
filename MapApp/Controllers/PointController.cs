@@ -6,7 +6,6 @@ namespace MapApp;
 [Route("api/[controller]")]
 public class PointController:ControllerBase , IPointController
 {
-    private static readonly List<Point> points = new List<Point>();
     private readonly IPointService _pointService;
 
     public PointController(IPointService pointService)

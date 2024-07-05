@@ -79,3 +79,7 @@
 /Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/obj/Debug/net8.0/MapApp.csproj.Up2Date
 /Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/obj/Debug/net8.0/MapApp.genruntimeconfig.cache
 /Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/obj/Debug/net8.0/ref/MapApp.dll
+/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll
+/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/ayavuzm/Desktop/Başarsoft Staj/Codes/deneme/MapApp/MapApp/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

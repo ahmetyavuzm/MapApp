@@ -9,6 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IPointService, PointService>();
+builder.Services.AddSingleton<IDBService, MapAppDBService>();
 
 var app = builder.Build();
 

@@ -2,9 +2,9 @@
 
 public interface IPointController
 {
-    Response<List<Point>> GetAll();
-    Response<Point> Get(int id);
-    Response<Point> Add(PointBodyView point);
-    Response<Point> Update(int id, PointBodyView point);
-    Response<Point> Delete(int id);
+    Task<Response<List<Point>>> GetAll();
+    Task<Response<Point>> GetById(int id);
+    Task<Response<Point>> Add(PointBodyView point);
+    Task<Response<Point>> Update(int id, PointBodyView point);
+    Task<Response<Point>> Delete(int id);
 }

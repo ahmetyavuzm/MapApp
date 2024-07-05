@@ -1,78 +1,134 @@
 ﻿
+using System.Data;
+using System.Data.Common;
+
 namespace MapApp;
 
 public class PointService : IPointService
 {
-    private static readonly List<Point> points = CreateData();
-    private static int id_counter = points.Count + 1;
-    public Point Add(PointBodyView point_body)
+    private readonly string table_name;
+    private readonly IDBService _dBService;
+    public PointService(IDBService dBService)
     {
-        
-        var item = new Point(id_counter,point_body);
-        points.Add(item);
-        id_counter++;
+        this.table_name = "public.points";
+        this._dBService = dBService;
 
-        return item;
     }
 
-    public Point Delete(int id)
+    public async Task<Point?> Add(PointBodyView view)
     {
-        Point point = points.FirstOrDefault(p => p.Id == id);
-        if (point == null)
-        {
+        string query = $"INSERT INTO {this.table_name} (\"X\",\"Y\",\"NAME\") VALUES ({view.X}, {view.Y}, '{view.Name}') RETURNING \"ID\"";
+        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
+            command.CommandText = query;
+            var res =  await command.ExecuteScalarAsync();
+            
+            if (res == null){
+                return null as Point;
+            }
+            
+            int id = Convert.ToInt32(res);
+
+            return new Point(id,view.Name,view.X,view.Y);
+        });
+
+
+        if (response == null){
             return null;
         }
-        points.Remove(point);
+        return response;
+    }
+
+    public async Task<Point?> Update(int id,PointBodyView view)
+    {
+        string query = $"UPDATE {this.table_name} SET \"X\" = {view.X}, \"Y\" = {view.Y}, \"NAME\" = '{view.Name}' WHERE \"ID\" = {id} RETURNING \"ID\"";
+        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
+            command.CommandText = query;
+            var res =  await command.ExecuteScalarAsync();
+            if (res == null){
+                return null as Point;
+            }
+            int id = Convert.ToInt32(res);
+
+            return new Point(id,view.Name,view.X,view.Y);
+        });
+
+        if (response == null){
+            return null;
+        }
+        return response;
+    }
+
+    public async Task<Point?> Delete(int id)
+    {
+        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
+            command.CommandText = $"DELETE FROM {this.table_name} WHERE \"ID\" = {id} RETURNING *";
+            using (var reader = await command.ExecuteReaderAsync()){
+                if (await reader.ReadAsync()){
+                    return MapToEntity(reader);
+                }else{
+                    return null;
+                }
+            }
+        });
+
+        if (response == null){
+            return null;
+        }else{
+            return response;
+        }
+    }
+
+    public async Task<List<Point>?> GetAll()
+    {
+        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
+            command.CommandText = $"SELECT * FROM {this.table_name}";
+            using (var reader = await command.ExecuteReaderAsync()){
+                List<Point> entities = new List<Point>();
+                while (await reader.ReadAsync()){
+                    entities.Add(MapToEntity(reader));
+                }
+                return entities;
+            }
+
+        });
+
+        if (response == null){
+            return null;
+        }else{
+            return response;
+        }
+    }
+
+    public async Task<Point?> GetById(int id)
+    {
+        var response = await this._dBService.ExecuteDatabaseOperations(async (command) => {
+            command.CommandText = $"SELECT * FROM {this.table_name} WHERE \"ID\" = {id}";
+            using (var reader = await command.ExecuteReaderAsync()){
+                if (await reader.ReadAsync()){
+                    return MapToEntity(reader);
+                }else{
+                    return null;
+                }
+            }
+        });
+
+        if (response == null){
+            return null;
+        }else{
+            return response;
+        }
+    }
+
+    private Point MapToEntity(DbDataReader reader)
+    {
+        Point point = new Point(
+            reader.GetInt32(0),
+            reader.GetString(3),
+            reader.GetDouble(1),
+            reader.GetDouble(2)
+
+        );
         return point;
     }
 
-    public Point Get(int id)
-    {
-        return points.FirstOrDefault(p => p.Id == id);
-    }
-
-    public List<Point> GetAll()
-    {
-        return points;
-    }
-
-    public Point Update(int id, PointBodyView point_body)
-    {
-        var item = points.FirstOrDefault(p => p.Id == id);
-        if (item == null)
-        {
-            return null;
-        }
-        item.Name = point_body.Name;
-        item.X = point_body.X;
-        item.Y = point_body.Y;
-        return item;
-    }
-
-
-    private static List<Point> CreateData()
-    {
-        return new List<Point>{
-            new Point(1, "Istanbul", 18, 33),
-            new Point(2, "Ankara", 15, 7),
-            new Point(3, "Izmir", 89, 81),
-            new Point(4, "Bursa", 63, 84),
-            new Point(5, "Antalya", 53, 61),
-            new Point(6, "Adana", 55, 16),
-            new Point(7, "Konya", 9, 4),
-            new Point(8, "Gaziantep", 8, 89),
-            new Point(9, "Şanlıurfa", 79, 66),
-            new Point(10, "Kocaeli", 51, 81),
-            new Point(11, "Diyarbakır", 37, 98),
-            new Point(12, "Mersin", 4, 2),
-            new Point(13, "Kayseri", 52, 82),
-            new Point(14, "Samsun", 61, 94),
-            new Point(15, "Eskişehir", 97, 82),
-            new Point(16, "Denizli", 31, 84),
-            new Point(17, "Trabzon", 2, 29),
-            new Point(18, "Malatya", 89, 55),
-            new Point(19, "Manisa", 58, 58),
-            new Point(20, "Kahramanmaraş", 83, 63)
-        };
-    }
 }

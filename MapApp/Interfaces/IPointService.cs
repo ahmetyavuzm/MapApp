@@ -2,9 +2,9 @@
 
 public interface IPointService
 {
-    List<Point> GetAll();
-    Point Get(int id);
-    Point Add(PointBodyView point);
-    Point Update(int id, PointBodyView point);
-    Point Delete(int id);
+    Task<List<Point>?> GetAll();
+    Task<Point?> GetById(int id);
+    Task<Point?> Add(PointBodyView point);
+    Task<Point?> Update(int id, PointBodyView point);
+    Task<Point?> Delete(int id);
 }

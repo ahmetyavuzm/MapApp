@@ -2,7 +2,7 @@
 
 namespace MapApp;
 
-public class PointBodyView
+public class PointBodyView : IView<Point>
 {
     public string Name { get; set; }
     public double X { get; set; }
@@ -24,7 +24,7 @@ public class PointBodyView
         Y = point.Y;
     }
 
-        public PointBodyView()
+    public PointBodyView()
     {
         
     }

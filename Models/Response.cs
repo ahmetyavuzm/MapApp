@@ -6,7 +6,7 @@ public class Response<T>
 
     public T Data { get; set; }
     public string Message { get; set; }
-    public StatusCode StatusCode { get; set; }
+    public int StatusCode { get; set; }
 
     public bool IsSuccess {get; set;}
 
@@ -14,23 +14,25 @@ public class Response<T>
     {
         Data = data;
         Message = message;
-        StatusCode = statusCode;
+        StatusCode = (int)statusCode;
         IsSuccess = isSuccess;
     }
 
 
     public static Response<T> Success(T data, string message)
     {
-        return new Response<T>(data, message, StatusCode.Success, true);
+        return new Response<T>(data, message, Enums.StatusCode.Success, true);
     }
 
     public static Response<T> Fail(T data, string message)
     {
-        return new Response<T>(data, message, StatusCode.Fail, true);
+        
+        
+        return new Response<T>(data, message, Enums.StatusCode.Fail, true);
     }
     public static Response<T> Error(T data, string message)
     {
-        return new Response<T>(data, message, StatusCode.Error, false);
+        return new Response<T>(data, message,Enums.StatusCode.Error, false);
     }
 
 

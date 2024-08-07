@@ -33,13 +33,15 @@ const Layers = () => {
   </div>
 
   <div className="w-full h-fit">
-  {mapInfo && mapInfo.map((layer, index) => {
+  {mapInfo && mapInfo.length> 0 ?  mapInfo.map((layer, index) => {
       return (
         <div key={index} className="w-full h-fit">
           <ParentComponent self={layer.group} parentIsShow={null}/>
         </div>
       );
-    })}
+    }) : <div className="w-full h-full p-20 flex items-center justify-center font-bold text-slate-500  text-2xl">
+        <div>No Layer</div>
+      </div>}
 
   </div>
   </div>

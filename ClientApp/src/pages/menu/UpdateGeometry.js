@@ -192,8 +192,17 @@ const UpdateGeometry = () => {
       toast.error("Name is required");
       return;
     }
-    
-    if(editItem.item instanceof Geometry){
+    console.log("Update Geometry", editItem.item);
+    if(editItem.item && editItem.item.type.toLowerCase() == "group"){
+      let data = {
+        id: editItem.item.id,
+        type: type,
+        properties: [{"key": "Name", "value": name, "type": "string"}, ...properties],
+        groupId: editItem.item.groupId ? parents[parents.length - 1] === undefined ? parents[parents.length - 2] : parents[parents.length - 1]: null,
+      };
+  
+      await updateGroup(data);
+    }else if(editItem.item){
       let data = {
         id: editItem.item.id,
         type: type,
@@ -203,25 +212,18 @@ const UpdateGeometry = () => {
       };
   
       await updateGeometry(data);
-    }else if(editItem.item instanceof Group){
-      console.log("Update Group", editItem.item);
-      let data = {
-        id: editItem.item.id,
-        type: type,
-        properties: [{"key": "Name", "value": name, "type": "string"}, ...properties],
-        groupId: editItem.item.groupId ? parents[parents.length - 1] === undefined ? parents[parents.length - 2] : parents[parents.length - 1]: null,
-      };
-  
-      await updateGroup(data);
     }
 
   };
 
   const handleDelete = async () => {
-    if(editItem.item instanceof Geometry){
-      let res = await deleteGeometry(editItem.item.id)
-    }else if(editItem.item instanceof Group){
+    if(editItem.item && editItem.item.type.toLowerCase() == "group"){
+      console.log("Delete Geometry", editItem.item);
       let res = await deleteGroup(editItem.item.id)
+      console.log("Delete Group", res);
+    }else if(editItem.item){
+      console.log("Delete Geometry", editItem.item);
+      let res = await deleteGeometry(editItem.item.id)
     }
   };
 

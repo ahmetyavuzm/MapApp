@@ -4,7 +4,7 @@ import React from "react";
 
 import {Link, useNavigate} from "react-router-dom"; 
 
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { checkEmail } from "../services/UtilsService";
 
@@ -97,7 +97,6 @@ const SignUpPage = () => {
 
   return (
     <section className="flex items-center justify-center w-full py-16 px-2 md:px-0 font-normal text-black  text-center rounded-3xl md:rounded-[40px]  bg-white">
-      <ToastContainer />
       <div className="flex  w-[336px] flex-col items-center justify-center ">
         <div
           title="text"

@@ -165,21 +165,7 @@ export const MapProvider = ({ children }) => {
   const location = useLocation();
   const getBasePath = () => {
 
-    let splitted = location.pathname.split("/");
-    let str = "";
-    console.log("Location: ", location.pathname);
-    console.log(splitted)
-    for (let path of splitted) {
-      console.log("Path: ", path);
-      str += path
-      console.log("Auth: ", AuthService.auth.currentUser.uid);
-      if(path.includes(AuthService.auth.currentUser.uid)){
-        break;
-      }
-      str += "/"
-    }
-
-    return str;
+    return "/mapApp/" + AuthService.auth.currentUser.uid;
   }
 
   React.useEffect(() => {
@@ -350,7 +336,7 @@ export const MapProvider = ({ children }) => {
         setMapInfo([...mapInfo]);
       }else{
         toast.success("Group added successfully");
-        parent = getGroupById(res.data.groupId);
+        let parent = getGroupById(res.data.groupId);
         console.log("Parent: ", parent);
         let group  = new Group(res.data);
         group.layer = parent.layer;

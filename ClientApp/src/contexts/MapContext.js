@@ -594,23 +594,24 @@ export const MapProvider = ({ children }) => {
     if (!map) return;
 
     const extent = feature.getGeometry().getExtent();
-    const center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2];
+    let center = [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2];
 
     const view = map.getView();
+    
     const resolution = view.getResolutionForExtent(extent, map.getSize());
-    const zoom = view.getZoomForResolution(resolution) - 1; // Adjust zoom level as needed
-
-    // Calculate the offset for the feature to be on the right side
-    const offsetX = map.getSize()[0] / 100;
-    const pixel = map.getPixelFromCoordinate(center);
-    pixel[0] -= offsetX;
-    const newCenter = map.getCoordinateFromPixel(pixel);
-
+    let zoom = 10
+    if(resolution !== 0){
+      zoom = view.getZoomForResolution(resolution) - 1; // Adjust zoom level as needed
+    }
+    console.log("Zoom:", zoom)
+    console.log("Resolution", resolution)
+    
     view.animate({
-      center: newCenter,
-      zoom: 10,
+      center: center,
+      zoom: zoom,
       duration: 1000,
     });
+
   };
 
 

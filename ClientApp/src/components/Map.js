@@ -1,26 +1,13 @@
 // components/Map.js
 import React from "react";
 import "ol/ol.css";
-import Map from "ol/Map";
-import View from "ol/View";
-import TileLayer from "ol/layer/Tile";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import Draw from "ol/interaction/Draw";
-import OSM from "ol/source/OSM";
+
 import Overlay from "ol/Overlay";
-import Modify from "ol/interaction/Modify";
-
-import { Icon, Style } from "ol/style";
-
-import GeometryPoint from "../models/Point";
 
 import constants , { DRAW_POINT, DRAW_LINE, DRAW_POLYGON, IDLE, EDIT } from "../constants";
 
 
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { fromLonLat } from "ol/proj";
 import { useMapContext } from "../contexts/MapContext";
 
 const MapComponent = () => {
@@ -55,7 +42,7 @@ const MapComponent = () => {
       }
     };
   }, [
-    mapEvent, map, mapInfo
+    mapEvent, map, mapInfo,drawPopup, isFeature
   ]);
 
 

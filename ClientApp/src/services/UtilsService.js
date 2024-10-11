@@ -1,15 +1,9 @@
-import html2canvas from 'html2canvas';
 
 
 export const checkEmail = (email) => {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(email);
 }
-
-
-
-
-
 
 const getGeometryById = (userMapInfo, id) => {
     let geometry = userMapInfo.filter((layer) => {
@@ -44,4 +38,4 @@ const _getGeometryById = (group, id) => {
     }
 }
 
-export default{ checkEmail};
+export default { checkEmail};

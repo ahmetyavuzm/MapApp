@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 
 import constants from "../constants";
 import { useNavigate } from "react-router-dom";
-import { set } from "ol/transform";
 
 import { useMapContext } from "../contexts/MapContext";
 
@@ -33,12 +32,15 @@ const GeometryComponent = ({ self, parentIsShow }) => {
   }, [parentIsShow]);
 
   React.useEffect(() => {
+    if(!self){
+      return;
+    }
     if (!isShow) {
       self.hideElement();
     } else {
       self.showElement();
     }
-  }, [isShow]);
+  }, [self, isShow]);
 
   const edit = () => {
     setEditItem({
@@ -101,7 +103,7 @@ const GeometryComponent = ({ self, parentIsShow }) => {
 
       <motion.div
         className={
-          `${isOpen ? "block" : "hidden"} ` + "w-full h-fit py-1 pl-[10px]"
+          `${isOpen ? "block" : "hidden"} w-full h-fit py-1 pl-[10px]`
         }
       >
         {self.feature ? (

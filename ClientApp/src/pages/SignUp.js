@@ -216,7 +216,7 @@ const SignUpPage = () => {
                 src={isAgree? "/images/checkboxTrue.png" : "/images/checkboxFalse.png"} alt="termsOfService" width={16} height={15}></img>
               <label className="ml-1 text-xs">
                 <label className={`${ (focuses[4] || validities[4]|| focuses[4]== null) ? "text-black":"text-red-500"} opacity-30  text-sm`}>I have read and agree to the </label>
-                <a to="" className=" text-blue-600  underline opacity-100 cursor-pointer">Terms of Service</a>
+                <a href="" className=" text-blue-600  underline opacity-100 cursor-pointer">Terms of Service</a>
               </label>
           </div>
 

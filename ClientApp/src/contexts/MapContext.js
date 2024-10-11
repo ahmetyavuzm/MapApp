@@ -23,12 +23,9 @@ import Geometry, {
 import Group from "../models/Group";
 
 import { Draw ,Modify} from "ol/interaction";
-import { LineString } from "ol/geom";
 
 import { Stroke, Style, Circle as CircleStyle, Fill } from "ol/style";
 import { useLocation, useNavigate } from "react-router-dom";
-import { set } from "ol/transform";
-import { get } from "ol/style/IconImage";
 import { toast } from "react-toastify";
 
 const MapContext = React.createContext();

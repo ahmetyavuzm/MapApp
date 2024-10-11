@@ -193,7 +193,7 @@ const UpdateGeometry = () => {
       return;
     }
     console.log("Update Geometry", editItem.item);
-    if(editItem.item && editItem.item.type.toLowerCase() == "group"){
+    if(editItem.item && (editItem.item.type.toLowerCase() == "group" || editItem.item.type.toLowerCase() === "layer")){
       let data = {
         id: editItem.item.id,
         type: type,
@@ -217,7 +217,7 @@ const UpdateGeometry = () => {
   };
 
   const handleDelete = async () => {
-    if(editItem.item && editItem.item.type.toLowerCase() == "group"){
+    if(editItem.item && (editItem.item.type.toLowerCase() == "group" || editItem.item.type.toLowerCase() === "layer")){
       console.log("Delete Geometry", editItem.item);
       let res = await deleteGroup(editItem.item.id)
       console.log("Delete Group", res);

@@ -42,7 +42,7 @@ const MapComponent = () => {
       }
     };
   }, [
-    mapEvent, map, mapInfo,drawPopup, isFeature
+    mapEvent, map, mapInfo
   ]);
 
 

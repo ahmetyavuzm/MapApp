@@ -3,6 +3,13 @@ using MapApp.Entities;
 using MapApp.Interfaces;
 using MapApp.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+
+
 //using Microsoft.OpenApi.Models;
 
 using Newtonsoft.Json;
@@ -37,6 +44,13 @@ builder.Services.AddCors(opt =>
     });
 });
 
+/*
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "ClientApp/build"; // React uygulamanızın build dizini
+});
+*/
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +64,23 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+
+/*
+
+// SPA ayarları
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "ClientApp"; // React uygulamanızın kaynak dosyaları
+
+});
+
+*/
+
+
+
+
+
 app.UseRouting();
 
 
@@ -63,7 +94,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
     
-
 
 
 app.MapFallbackToFile("index.html");
